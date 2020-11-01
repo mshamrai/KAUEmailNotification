@@ -1,0 +1,7 @@
+*.pickle
+*.cfg
+*.json
+*.pdf
+*.docx
+*.html
+__pycache__
