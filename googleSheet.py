@@ -3,10 +3,10 @@ import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
+from reportInfo import *
+
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
-SAMPLE_SPREADSHEET_ID = '13vwyvMRlv-hf-glUsIDn2AYGqnWjL2eOwzlxB7rhwvI'
-SAMPLE_RANGE_NAME = 'B2:B'
 
 def get_creds():
     creds = None
@@ -28,6 +28,8 @@ def get_creds():
     return creds
 
 def get_emails():
+    SAMPLE_SPREADSHEET_ID = '13vwyvMRlv-hf-glUsIDn2AYGqnWjL2eOwzlxB7rhwvI'
+    SAMPLE_RANGE_NAME = 'B2:B'
     service = build('sheets', 'v4', credentials=get_creds())
     sheet = service.spreadsheets()
     result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
@@ -36,16 +38,26 @@ def get_emails():
     emails = [e[0] for e in emails]
     return list(dict.fromkeys(emails))
 
-def main():
-    emails = get_emails()
+def get_report_info():
+    SAMPLE_SPREADSHEET_ID = '1FPnNPFGcli5gaeoMPpGXk4TZJwQCeT42CrinSXsn9YU'
+    SAMPLE_RANGE_NAME = 'A11:I11'
+    service = build('sheets', 'v4', credentials=get_creds())
+    sheet = service.spreadsheets()
+    result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
+                                range=SAMPLE_RANGE_NAME).execute()
+    info = result.get('values', [])
+    return [ReportInfo(i) for i in info]
 
-    if not emails:
+def main():
+    info = get_report_info()
+
+    if not info:
         print('No data found.')
     else:
-        for row in emails:
+        for row in info:
             print(row)
 
-        print(len(emails))
+        print(len(info))
 
 if __name__ == '__main__':
     main()
