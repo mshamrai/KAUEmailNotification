@@ -40,7 +40,7 @@ def get_emails():
 
 def get_report_info():
     SAMPLE_SPREADSHEET_ID = '1FPnNPFGcli5gaeoMPpGXk4TZJwQCeT42CrinSXsn9YU'
-    SAMPLE_RANGE_NAME = 'A11:I11'
+    SAMPLE_RANGE_NAME = 'A9:I9'
     service = build('sheets', 'v4', credentials=get_creds())
     sheet = service.spreadsheets()
     result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,

@@ -10,26 +10,16 @@ import docx
 from googleSheet import get_emails
 import configParser
 import mail
+import pdfAnnounc
 
-date = '11.11.2020'
+date = '25.11.2020'
 
 msg = MIMEMultipart()
 msg['Subject'] = 'Семінар ЦДД КАУ ' + date
 
 headerFileName = "light.png"
 
-filename='Announcement_KAU_' + date + '.pdf'
-filename2 = 'Оголошення_КАУ_' + date + '.pdf'
-fp=open(filename,'rb')
-fp2=open(filename2,'rb')
-att = MIMEApplication(fp.read(),_subtype="pdf")
-att2 = MIMEApplication(fp2.read(),_subtype="pdf")
-fp.close()
-fp2.close()
-att.add_header('Content-Disposition','attachment',filename=filename)
-att2.add_header('Content-Disposition','attachment',filename=filename2)
-msg.attach(att)
-msg.attach(att2)
+pdfAnnounc.attach(msg, date)
 
 img_data = open(headerFileName, 'rb').read()
 image = MIMEImage(img_data, name=os.path.basename(headerFileName))
@@ -39,7 +29,7 @@ part2 = MIMEText(mail.create_message(), "html")
 msg.attach(part2)
 msg.attach(image)
 
-mails = get_emails() 
+mails = ['vortmanmax@gmail.com']# get_emails() 
 
 smtpObj = smtplib.SMTP('smtp.gmail.com', 587)
 smtpObj.ehlo()
