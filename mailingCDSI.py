@@ -24,12 +24,12 @@ pdfAnnounc.attach(msg, date)
 img_data = open(headerFileName, 'rb').read()
 image = MIMEImage(img_data, name=os.path.basename(headerFileName))
 image.add_header('Content-ID', '<{}>'.format(headerFileName))
-part2 = MIMEText(mail.create_message(), "html")
+part2 = MIMEText(mail.create_message(date), "html")
 
 msg.attach(part2)
 msg.attach(image)
 
-mails = ['vortmanmax@gmail.com']# get_emails() 
+mails = get_emails() 
 
 smtpObj = smtplib.SMTP('smtp.gmail.com', 587)
 smtpObj.ehlo()

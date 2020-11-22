@@ -46,7 +46,7 @@ def get_report_info(date):
     DATE_RANGE = 'B2:B'
     dates = request(SAMPLE_SPREADSHEET_ID, DATE_RANGE)
     indices = [i for i, x in enumerate(dates) if x == [date]]
-    RANGES = ['A' + str(i + 1) + ':I' + str(i + 1) for i in indices]
+    RANGES = ['A' + str(i+2) + ':I' + str(i+2) for i in indices]
     info = [request(SAMPLE_SPREADSHEET_ID, r) for r in RANGES]
     info = [i[0] for i in info]
     return [ReportInfo(i) for i in info]
