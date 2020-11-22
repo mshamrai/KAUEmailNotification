@@ -27,29 +27,32 @@ def get_creds():
 
     return creds
 
+def request(spreadsheetId, range):
+    service = build('sheets', 'v4', credentials=get_creds())
+    sheet = service.spreadsheets()
+    result = sheet.values().get(spreadsheetId=spreadsheetId,
+                                range=range).execute()
+    return result.get('values', [])
+
 def get_emails():
     SAMPLE_SPREADSHEET_ID = '13vwyvMRlv-hf-glUsIDn2AYGqnWjL2eOwzlxB7rhwvI'
     SAMPLE_RANGE_NAME = 'B2:B'
-    service = build('sheets', 'v4', credentials=get_creds())
-    sheet = service.spreadsheets()
-    result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-                                range=SAMPLE_RANGE_NAME).execute()
-    emails = result.get('values', [])
+    emails = request(SAMPLE_SPREADSHEET_ID, SAMPLE_RANGE_NAME)
     emails = [e[0] for e in emails]
     return list(dict.fromkeys(emails))
 
-def get_report_info():
+def get_report_info(date):
     SAMPLE_SPREADSHEET_ID = '1FPnNPFGcli5gaeoMPpGXk4TZJwQCeT42CrinSXsn9YU'
-    SAMPLE_RANGE_NAME = 'A9:I9'
-    service = build('sheets', 'v4', credentials=get_creds())
-    sheet = service.spreadsheets()
-    result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-                                range=SAMPLE_RANGE_NAME).execute()
-    info = result.get('values', [])
+    DATE_RANGE = 'B2:B'
+    dates = request(SAMPLE_SPREADSHEET_ID, DATE_RANGE)
+    indices = [i for i, x in enumerate(dates) if x == [date]]
+    RANGES = ['A' + str(i + 1) + ':I' + str(i + 1) for i in indices]
+    info = [request(SAMPLE_SPREADSHEET_ID, r) for r in RANGES]
+    info = [i[0] for i in info]
     return [ReportInfo(i) for i in info]
 
 def main():
-    info = get_report_info()
+    info = get_report_info('25.11.2020')
 
     if not info:
         print('No data found.')
