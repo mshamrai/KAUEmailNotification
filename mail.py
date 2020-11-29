@@ -1,5 +1,6 @@
 from googleSheet import get_report_info
 from reportInfo import *
+from seminarDate import nextWednesdayDateUA
 
 heading = """
 <div style="height:100%;margin:0;padding:0;width:100%;background-color:#fafafa">
@@ -76,18 +77,20 @@ ending = """
         </div>
 """
 
-def create_message(date):
-    infoes = get_report_info(date)
-    when = "</li></ul><p><b>Коли:</b> 25 листопада (середа) о 17:00</p>"
+def create_message():
+    infoes = get_report_info()
+    when = "</li></ul><p><b>Коли:</b> " + nextWednesdayDateUA + " (середа) о 17:00</p>"
     html = ""
     for info in infoes:
-        html += """
+        html += ("""
             <li><p><b>Доповідач:</b> %s
                 <br/>
-                (%s)
+                (""" % info.reporter) + (info.degree + ',') * (info.degree != '') + \
+        """
+            %s)
             </p>
             <p><b>Тема:</b> %s </p>
             <p> %s </p>
-        """ % (info.reporter, info.place, info.title, info.abstract)
+        """ % (info.place, info.title, info.abstract)
     html = heading + html + when + ending
     return html
