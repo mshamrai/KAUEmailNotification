@@ -20,3 +20,5 @@ nextWednesday = onDate(datetime.datetime.now().date(), 2)
 nextWednesdayDateInStandardFormat = nextWednesday.strftime('%d.%m.%Y')
 
 nextWednesdayDateUA = str(nextWednesday.timetuple()[2]) + ' ' + months[nextWednesday.timetuple()[1]]
+
+str2Date = lambda s: datetime.datetime.strptime(s, '%d.%m.%Y').date()

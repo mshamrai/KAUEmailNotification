@@ -4,7 +4,7 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from reportInfo import *
-from seminarDate import nextWednesdayDateInStandardFormat
+from seminarDate import nextWednesday, str2Date
 
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
@@ -46,7 +46,7 @@ def get_report_info():
     SAMPLE_SPREADSHEET_ID = '1FPnNPFGcli5gaeoMPpGXk4TZJwQCeT42CrinSXsn9YU'
     DATE_RANGE = 'B2:B'
     dates = request(SAMPLE_SPREADSHEET_ID, DATE_RANGE)
-    indices = [i for i, x in enumerate(dates) if x == [nextWednesdayDateInStandardFormat]]
+    indices = [i for i, x in enumerate(dates) if str2Date(x[0]) == nextWednesday]
     RANGES = ['A' + str(i+2) + ':I' + str(i+2) for i in indices]
     info = [request(SAMPLE_SPREADSHEET_ID, r) for r in RANGES]
     info = [i[0] for i in info]

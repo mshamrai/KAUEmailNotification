@@ -85,9 +85,8 @@ def create_message():
         html += ("""
             <li><p><b>Доповідач:</b> %s
                 <br/>
-                (""" % info.reporter) + (info.degree + ',') * (info.degree != '') + \
-        """
-            %s)
+                (""" % info.reporter) + (info.degree + ', ') * (info.degree != '') + \
+        """%s)
             </p>
             <p><b>Тема:</b> %s </p>
             <p> %s </p>
