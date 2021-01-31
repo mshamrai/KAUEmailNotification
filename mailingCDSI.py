@@ -1,12 +1,8 @@
 import os
 import smtplib
-import copy
 from email.mime.multipart import MIMEMultipart
-from email.mime.application import MIMEApplication
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
-import pandas as pd
-import docx
 from googleSheet import get_emails
 import configParser
 import mail
