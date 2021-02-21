@@ -8,6 +8,11 @@ from seminarDate import nextWednesday, str2Date
 
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
+EMAILS_SPREADSHEET_ID = os.environ.get('EMAILS_SPREADSHEET_ID')
+EMAILS_SPREADSHEET_RANGE = os.environ.get('EMAILS_SPREADSHEET_RANGE')
+INFO_SPREADSHEET_ID = os.environ.get('INFO_SPREADSHEET_ID')
+GOOGLE_CLIENT_SECRET_FILE = 'credentials.json'
+
 
 def get_creds():
     creds = None
@@ -20,7 +25,7 @@ def get_creds():
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                'credentials.json', SCOPES)
+                GOOGLE_CLIENT_SECRET_FILE, SCOPES)
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
         with open('token.pickle', 'wb') as token:
@@ -36,23 +41,21 @@ def request(spreadsheetId, range):
     return result.get('values', [])
 
 def get_emails():
-    SAMPLE_SPREADSHEET_ID = '13vwyvMRlv-hf-glUsIDn2AYGqnWjL2eOwzlxB7rhwvI'
-    SAMPLE_RANGE_NAME = 'D2:D'
-    emails = request(SAMPLE_SPREADSHEET_ID, SAMPLE_RANGE_NAME)
+    emails = request(EMAILS_SPREADSHEET_ID, EMAILS_SPREADSHEET_RANGE)
     emails = [e[0] for e in emails]
     return list(dict.fromkeys(emails))
 
 def get_report_info():
-    SAMPLE_SPREADSHEET_ID = '1FPnNPFGcli5gaeoMPpGXk4TZJwQCeT42CrinSXsn9YU'
     DATE_RANGE = 'B2:B'
-    dates = request(SAMPLE_SPREADSHEET_ID, DATE_RANGE)
+    dates = request(INFO_SPREADSHEET_ID, DATE_RANGE)
     indices = [i for i, x in enumerate(dates) if str2Date(x[0]) == nextWednesday]
     RANGES = ['A' + str(i+2) + ':I' + str(i+2) for i in indices]
-    info = [request(SAMPLE_SPREADSHEET_ID, r) for r in RANGES]
+    info = [request(INFO_SPREADSHEET_ID, r) for r in RANGES]
     info = [i[0] for i in info]
     return [ReportInfo(i) for i in info]
 
-def main():
+
+if __name__ == '__main__':
     info = get_emails()
 
     if not info:
@@ -62,6 +65,3 @@ def main():
             print(row)
 
         print(len(info))
-
-if __name__ == '__main__':
-    main()

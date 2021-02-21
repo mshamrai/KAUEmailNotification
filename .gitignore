@@ -1,8 +1,6 @@
 *.pickle
 *.cfg
 *.json
-*.pdf
-*.docx
-*.html
 __pycache__
 venv
+Makefile
