@@ -36,7 +36,9 @@ heading = """
 """
 
 ending = """
-<p><b>Де:</b> <a href="https://us02web.zoom.us/j/81901090493?pwd=bkVlOVBJWEJMcFdNMDNOc2liUkNRUT09">конференція в Zoom</a></p>
+<p><b>Де:</b> <a href="https://us02web.zoom.us/j/84322131944?pwd=a2pwRVFkWUsvdWRyRUdqNHZTNmNtZz09">конференція в Zoom</a></p>
+<p><b>Meeting ID:</b> 843 2213 1944</p>
+<p><b>Passcode:</b> 281615</p>
                                                             <p>За оновленою інформацією слідкуйте на сайті
                                                                 <a href="https://sites.google.com/view/data-analysis/home">ЦДД КАУ</a>,
                                                                 або на сторінці <a href="https://kau.org.ua/deps/math/251-seminar-tsentru-doslidzhennia-danykh-ta-innovatsii"> кафедри математики KAU.</a></p>
@@ -48,7 +50,8 @@ ending = """
                                                             <p>
                                                                 Керівники семінару: <br/>
                                                                 Антонюк Олександра Вікторівна,<br/>
-                                                                Сенько Іван Олександрович
+                                                                Сенько Іван Олександрович,<br/>
+                                                                Ситник Дмитро Олексійович
                                                             </p>
                                                             <p>
                                                                 Наукові секретарі семінару: <br/>
