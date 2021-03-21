@@ -48,7 +48,13 @@ def get_emails():
 def get_report_info():
     DATE_RANGE = 'B2:B'
     dates = request(INFO_SPREADSHEET_ID, DATE_RANGE)
-    indices = [i for i, x in enumerate(dates) if str2Date(x[0]) == nextWednesday]
+    indices = []
+    for i, x in enumerate(dates):
+        try:
+            if str2Date(x[0]) == nextWednesday:
+                indices.append(i)
+        except ValueError as e:
+            print(str(e))
     RANGES = ['A' + str(i+2) + ':I' + str(i+2) for i in indices]
     info = [request(INFO_SPREADSHEET_ID, r) for r in RANGES]
     info = [i[0] for i in info]
